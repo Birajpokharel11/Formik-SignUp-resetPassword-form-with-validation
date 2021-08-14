@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -104,6 +106,11 @@ function SignIn({ onUserLogin }) {
           >
             Submit
           </Button>
+          <Grid item>
+            <Link to="/password" variant="body2">
+              {'Reset Password? '}
+            </Link>
+          </Grid>
         </form>
       </div>
     </Container>
