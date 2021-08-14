@@ -1,4 +1,3 @@
-/* eslint-disable no-const-assign */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { useFormik } from 'formik';
@@ -10,8 +9,6 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const validationSchema = yup.object({
-  name: yup.string('Enter your Name').required('Name is required'),
   email: yup
     .string('Enter your email')
     .email('Enter a valid email')
@@ -43,47 +39,33 @@ const validationSchema = yup.object({
     .min(8, 'Password should be of minimum 8 characters length')
     .required('Password is required')
 });
-
-function SignUp() {
+function SignIn({ onUserLogin }) {
+  // useEffect(() => {
+  //   userload();
+  // }, [isAuthenticated]);
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      name: '',
       email: '',
       password: ''
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const { name, email, password } = values;
+      const { email, password } = values;
       alert(JSON.stringify(values, null, 2));
+      console.log(email, password);
     }
   });
-
   return (
-    <Container maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign in
         </Typography>
-        <form onSubmit={formik.handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -122,17 +104,10 @@ function SignUp() {
           >
             Submit
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to="/login" variant="body2">
-                {'Already have account? Sign Up'}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
   );
 }
 
-export default SignUp;
+export default SignIn;
